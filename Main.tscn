@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpba0mm5dh8xa"]
+
+[ext_resource type="Texture2D" uid="uid://copmucndwlg85" path="res://Assets/topdown-shooter/Spritesheet/spritesheet_characters.png" id="1_g1bep"]
+[ext_resource type="Script" path="res://Player.cs" id="1_xf2ss"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pypao"]
+size = Vector2(50, 48)
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_xf2ss")
+_speed = 400
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("1_g1bep")
+region_enabled = true
+region_rect = Rect2(0, 0, 56, 44)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-9, 0)
+shape = SubResource("RectangleShape2D_pypao")
