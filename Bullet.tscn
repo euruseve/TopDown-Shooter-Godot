@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://1qyk3hghs8ni"]
+
+[ext_resource type="Texture2D" uid="uid://bcr5o8iucd2vi" path="res://Assets/kenney_topdowntanksredux/Spritesheet/onlyObjects_default.png" id="1_uqr22"]
+[ext_resource type="Script" path="res://Bullet.cs" id="1_v38pd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g0m8a"]
+size = Vector2(8, 12)
+
+[node name="Bullet" type="Area2D"]
+rotation = 1.5708
+script = ExtResource("1_v38pd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g0m8a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_uqr22")
+region_enabled = true
+region_rect = Rect2(198, 46, 4, 10)
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="KillTimer" to="." method="OnKillTimerTimeout"]

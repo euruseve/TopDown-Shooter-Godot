@@ -3,21 +3,37 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+    [Signal]
+    public delegate void PlayerFiredBulletEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
+
     [Export]
     private int _speed = 100;
 
+    [Export]
+    private PackedScene _bullet;
+
+    private Marker2D _endOfGun;
+    private Marker2D _gunDirection;
+
+    public override void _Ready()
+    {
+        _endOfGun = GetNode<Marker2D>("EndOfGun");
+        _gunDirection = GetNode<Marker2D>("GunDirection");
+    }
 
     public override void _Process(double delta)
     {
+        base._Process(delta);
+
         Vector2 movementDirection = Vector2.Zero;
 
-        if(Input.IsActionPressed("Up"))
+        if (Input.IsActionPressed("Up"))
             movementDirection.Y = -1;
-        if(Input.IsActionPressed("Down"))
+        if (Input.IsActionPressed("Down"))
             movementDirection.Y = 1;
-        if(Input.IsActionPressed("Left"))
+        if (Input.IsActionPressed("Left"))
             movementDirection.X = -1;
-        if(Input.IsActionPressed("Right"))
+        if (Input.IsActionPressed("Right"))
             movementDirection.X = 1;
 
         movementDirection = movementDirection.Normalized();
@@ -27,4 +43,18 @@ public partial class Player : CharacterBody2D
         LookAt(GetGlobalMousePosition());
     }
 
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionReleased("Shoot"))
+            Shoot();
+    }
+
+    private void Shoot()
+    {
+        var bulletInstance = _bullet.Instantiate() as Bullet;
+        var direction = (_gunDirection.GlobalPosition - _endOfGun.GlobalPosition).Normalized();
+
+        EmitSignal(SignalName.PlayerFiredBullet, bulletInstance, _endOfGun.GlobalPosition, direction);
+    }
 }

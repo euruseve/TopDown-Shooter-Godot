@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://kcodum21tqu0"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_74rbk"]
+[ext_resource type="PackedScene" uid="uid://1qyk3hghs8ni" path="res://Bullet.tscn" id="2_0s17x"]
+[ext_resource type="Texture2D" uid="uid://copmucndwlg85" path="res://Assets/topdown-shooter/Spritesheet/spritesheet_characters.png" id="2_o27sl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pypao"]
+size = Vector2(50, 48)
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(139, 82)
+script = ExtResource("1_74rbk")
+_bullet = ExtResource("2_0s17x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_o27sl")
+region_enabled = true
+region_rect = Rect2(0, 0, 56, 44)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-9, 0)
+shape = SubResource("RectangleShape2D_pypao")
+
+[node name="EndOfGun" type="Marker2D" parent="."]
+position = Vector2(31, 9)
+
+[node name="GunDirection" type="Marker2D" parent="."]
+position = Vector2(34, 9)
