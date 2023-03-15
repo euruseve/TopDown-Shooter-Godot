@@ -15,10 +15,15 @@ public partial class Player : CharacterBody2D
     private Marker2D _endOfGun;
     private Marker2D _gunDirection;
 
+    private Timer _attackCooldown;
+    private AnimationPlayer _animationPlayer;
+
     public override void _Ready()
     {
         _endOfGun = GetNode<Marker2D>("EndOfGun");
         _gunDirection = GetNode<Marker2D>("GunDirection");
+        _attackCooldown = GetNode<Timer>("AttackCooldown");
+        _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
     public override void _Process(double delta)
@@ -52,9 +57,14 @@ public partial class Player : CharacterBody2D
 
     private void Shoot()
     {
-        var bulletInstance = _bullet.Instantiate() as Bullet;
-        var direction = (_gunDirection.GlobalPosition - _endOfGun.GlobalPosition).Normalized();
+        if(_attackCooldown.IsStopped())
+        {
+            var bulletInstance = _bullet.Instantiate() as Bullet;
+            var direction = (_gunDirection.GlobalPosition - _endOfGun.GlobalPosition).Normalized();
 
-        EmitSignal(SignalName.PlayerFiredBullet, bulletInstance, _endOfGun.GlobalPosition, direction);
+            EmitSignal(SignalName.PlayerFiredBullet, bulletInstance, _endOfGun.GlobalPosition, direction);
+            _attackCooldown.Start();
+            _animationPlayer.Play("MuzzleFlash");
+        } 
     }
 }

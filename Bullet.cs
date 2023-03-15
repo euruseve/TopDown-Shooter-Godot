@@ -36,6 +36,9 @@ public partial class Bullet : Area2D
         QueueFree();
     }
 
-    public void SetDirection(Vector2 direction) =>
-        this._direction = direction;
+    public void SetDirection(Vector2 direction)
+    {
+        _direction = direction;
+        this.Rotation += direction.Angle();
+    }
 }
