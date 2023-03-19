@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using TopDownShooter;
 
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, IHandleHitted
 {
     [Signal]
     public delegate void PlayerFiredBulletEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
@@ -17,6 +18,8 @@ public partial class Player : CharacterBody2D
 
     private Timer _attackCooldown;
     private AnimationPlayer _animationPlayer;
+
+    private int _health = 100;
 
     public override void _Ready()
     {
@@ -66,5 +69,11 @@ public partial class Player : CharacterBody2D
             _attackCooldown.Start();
             _animationPlayer.Play("MuzzleFlash");
         } 
+    }
+
+    public void HandleHit()
+    {
+        _health -= 20;
+        GD.Print("Player hitted ", _health);
     }
 }

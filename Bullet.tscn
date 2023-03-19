@@ -22,4 +22,5 @@ region_rect = Rect2(198, 46, 4, 10)
 wait_time = 0.5
 one_shot = true
 
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="timeout" from="KillTimer" to="." method="OnKillTimerTimeout"]

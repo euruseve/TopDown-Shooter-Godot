@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using TopDownShooter;
 
 public partial class Bullet : Area2D
 {
@@ -40,5 +41,15 @@ public partial class Bullet : Area2D
     {
         _direction = direction;
         this.Rotation += direction.Angle();
+    }
+
+    public void OnBodyEntered(Node body)
+    {
+        var hh = body as IHandleHitted;
+        if(hh != null)
+        {
+            hh.HandleHit();
+            QueueFree();
+        }
     }
 }
