@@ -10,28 +10,20 @@ public partial class Player : CharacterBody2D, IHandleHitted
     [Export]
     private int _speed = 100;
 
-    [Export]
-    private PackedScene _bullet;
-
-    private Marker2D _endOfGun;
-    private Marker2D _gunDirection;
-
-    private Timer _attackCooldown;
-    private AnimationPlayer _animationPlayer;
-
-    private int _health = 100;
+    private Health _health;
+    private Weapon _weapon;
 
     public override void _Ready()
     {
-        _endOfGun = GetNode<Marker2D>("EndOfGun");
-        _gunDirection = GetNode<Marker2D>("GunDirection");
-        _attackCooldown = GetNode<Timer>("AttackCooldown");
-        _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        _health = GetNode<Health>("Health");
+        _weapon = GetNode<Weapon>("Weapon");
+
+        _weapon.WeaponFired += this.Shoot;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
-        base._Process(delta);
+        base._PhysicsProcess(delta);
 
         Vector2 movementDirection = Vector2.Zero;
 
@@ -55,25 +47,17 @@ public partial class Player : CharacterBody2D, IHandleHitted
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event.IsActionReleased("Shoot"))
-            Shoot();
+            _weapon.Shoot();
     }
 
-    private void Shoot()
+    private void Shoot(Bullet bullet, Vector2 position, Vector2 direction)
     {
-        if(_attackCooldown.IsStopped())
-        {
-            var bulletInstance = _bullet.Instantiate() as Bullet;
-            var direction = (_gunDirection.GlobalPosition - _endOfGun.GlobalPosition).Normalized();
-
-            EmitSignal(SignalName.PlayerFiredBullet, bulletInstance, _endOfGun.GlobalPosition, direction);
-            _attackCooldown.Start();
-            _animationPlayer.Play("MuzzleFlash");
-        } 
+        EmitSignal(SignalName.PlayerFiredBullet, bullet, position, direction);
     }
 
     public void HandleHit()
     {
-        _health -= 20;
+        _health.HealthValue -= 20;
         GD.Print("Player hitted ", _health);
     }
 }

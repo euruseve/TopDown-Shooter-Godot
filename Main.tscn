@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpba0mm5dh8xa"]
+[gd_scene load_steps=5 format=3 uid="uid://2l4dsqls8tuw"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_eoxsp"]
-[ext_resource type="PackedScene" uid="uid://kcodum21tqu0" path="res://Player.tscn" id="1_jxs7w"]
-[ext_resource type="PackedScene" uid="uid://bp6pkdqd03k03" path="res://Enemy.tscn" id="3_o74ow"]
+[ext_resource type="PackedScene" uid="uid://b6jfumr2vjx1n" path="res://Actors/Player.tscn" id="1_jxs7w"]
+[ext_resource type="PackedScene" uid="uid://m7cb0nggxvp0" path="res://Actors/Enemy.tscn" id="3_o74ow"]
 [ext_resource type="Script" path="res://BulletManager.cs" id="3_xhb4l"]
 
 [node name="Main" type="Node2D"]

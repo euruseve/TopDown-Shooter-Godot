@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6jfumr2vjx1n"]
+
+[ext_resource type="Script" path="res://Actors/Player.cs" id="1_3qn55"]
+[ext_resource type="Texture2D" uid="uid://copmucndwlg85" path="res://Assets/topdown-shooter/Spritesheet/spritesheet_characters.png" id="3_smdkk"]
+[ext_resource type="PackedScene" uid="uid://duqw6h5tmrxf5" path="res://Weapons/Weapon.tscn" id="4_2x0ay"]
+[ext_resource type="PackedScene" uid="uid://r737t84me83c" path="res://Actors/Health.tscn" id="5_h8viq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pypao"]
+size = Vector2(50, 48)
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(139, 82)
+script = ExtResource("1_3qn55")
+_speed = 200
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_smdkk")
+region_enabled = true
+region_rect = Rect2(348, 0, 40, 44)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-9, 0)
+shape = SubResource("RectangleShape2D_pypao")
+
+[node name="Weapon" parent="." instance=ExtResource("4_2x0ay")]
+position = Vector2(24, 12)
+
+[node name="Health" parent="." instance=ExtResource("5_h8viq")]

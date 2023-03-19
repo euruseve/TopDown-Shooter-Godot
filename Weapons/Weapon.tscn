@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bp6pkdqd03k03"]
+[gd_scene load_steps=7 format=3 uid="uid://duqw6h5tmrxf5"]
 
-[ext_resource type="Script" path="res://Enemy.cs" id="1_pk26b"]
-[ext_resource type="Texture2D" uid="uid://copmucndwlg85" path="res://Assets/topdown-shooter/Spritesheet/spritesheet_characters.png" id="3_w307k"]
-[ext_resource type="Texture2D" uid="uid://bcr5o8iucd2vi" path="res://Assets/kenney_topdowntanksredux/Spritesheet/onlyObjects_default.png" id="4_1gx34"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pypao"]
-size = Vector2(50, 48)
+[ext_resource type="Script" path="res://Weapons/Weapon.cs" id="1_122r8"]
+[ext_resource type="PackedScene" uid="uid://1qyk3hghs8ni" path="res://Weapons/Bullet.tscn" id="2_0c1i1"]
+[ext_resource type="Texture2D" uid="uid://bcr5o8iucd2vi" path="res://Assets/kenney_topdowntanksredux/Spritesheet/onlyObjects_default.png" id="3_omwnk"]
+[ext_resource type="Texture2D" uid="uid://iqcvxqmd8f7w" path="res://Assets/topdown-shooter/PNG/weapon_silencer.png" id="3_pydlr"]
 
 [sub_resource type="Animation" id="Animation_5yrie"]
 resource_name = "MuzzleFlash"
@@ -41,24 +39,18 @@ _data = {
 "MuzzleFlash": SubResource("Animation_5yrie")
 }
 
-[node name="Enemy" type="CharacterBody2D"]
-position = Vector2(139, 82)
-script = ExtResource("1_pk26b")
+[node name="Weapon" type="Node2D"]
+script = ExtResource("1_122r8")
+_bullet = ExtResource("2_0c1i1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_w307k")
-region_enabled = true
-region_rect = Rect2(0, 88, 56, 44)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-9, 0)
-shape = SubResource("RectangleShape2D_pypao")
+texture = ExtResource("3_pydlr")
 
 [node name="EndOfGun" type="Marker2D" parent="."]
-position = Vector2(31, 9)
+position = Vector2(15, 0)
 
 [node name="GunDirection" type="Marker2D" parent="."]
-position = Vector2(34, 9)
+position = Vector2(30, 0)
 
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 0.7
@@ -66,10 +58,10 @@ one_shot = true
 
 [node name="MuzzleFlash" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(43, 9)
+position = Vector2(27, 0)
 rotation = -1.5708
 scale = Vector2(0.5, 1.2)
-texture = ExtResource("4_1gx34")
+texture = ExtResource("3_omwnk")
 region_enabled = true
 region_rect = Rect2(324, 334, 20, 25)
 
